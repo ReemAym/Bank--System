@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B8B712AD-15A0-4C12-BA38-5D3FF42217EE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BankForm1</RootNamespace>
+    <AssemblyName>BankForm1</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NServiceBus.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.7.2.0\lib\net452\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Transport.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.SqlServer.6.3.3\lib\net461\NServiceBus.Transport.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BankSystemDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankSystemDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="AddBank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddBank.Designer.cs">
+      <DependentUpon>AddBank.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddCus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddCus.Designer.cs">
+      <DependentUpon>AddCus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllCustomers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllCustomers.Designer.cs">
+      <DependentUpon>AllCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddAccount.Designer.cs">
+      <DependentUpon>AddAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllLoans.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllLoans.Designer.cs">
+      <DependentUpon>AllLoans.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_D.Designer.cs">
+      <DependentUpon>query_D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_C.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_C.Designer.cs">
+      <DependentUpon>query_C.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_F.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_F.Designer.cs">
+      <DependentUpon>query_F.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loanHandle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loanHandle.Designer.cs">
+      <DependentUpon>loanHandle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loanRequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loanRequest.Designer.cs">
+      <DependentUpon>loanRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loanType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loanType.Designer.cs">
+      <DependentUpon>loanType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_E.Designer.cs">
+      <DependentUpon>query_E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_B.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_B.Designer.cs">
+      <DependentUpon>query_B.cs</DependentUpon>
+    </Compile>
+    <Compile Include="query_A.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="query_A.Designer.cs">
+      <DependentUpon>query_A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WelcomeForm.Designer.cs">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignupAmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignupAmin.Designer.cs">
+      <DependentUpon>SignupAmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignupCus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignupCus.Designer.cs">
+      <DependentUpon>SignupCus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddBranch.Designer.cs">
+      <DependentUpon>AddBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignupEmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignupEmp.Designer.cs">
+      <DependentUpon>SignupEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddAccount.resx">
+      <DependentUpon>AddAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddBank.resx">
+      <DependentUpon>AddBank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddBranch.resx">
+      <DependentUpon>AddBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddCus.resx">
+      <DependentUpon>AddCus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllCustomers.resx">
+      <DependentUpon>AllCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllLoans.resx">
+      <DependentUpon>AllLoans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loanHandle.resx">
+      <DependentUpon>loanHandle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loanRequest.resx">
+      <DependentUpon>loanRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loanType.resx">
+      <DependentUpon>loanType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_C.resx">
+      <DependentUpon>query_C.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_D.resx">
+      <DependentUpon>query_D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_E.resx">
+      <DependentUpon>query_E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_A.resx">
+      <DependentUpon>query_A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_B.resx">
+      <DependentUpon>query_B.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="query_F.resx">
+      <DependentUpon>query_F.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignupCus.resx">
+      <DependentUpon>SignupCus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignupAmin.resx">
+      <DependentUpon>SignupAmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignupEmp.resx">
+      <DependentUpon>SignupEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="BankSystemDataSet.xsc">
+      <DependentUpon>BankSystemDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="BankSystemDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BankSystemDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BankSystemDataSet.xss">
+      <DependentUpon>BankSystemDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\NServiceBus.7.2.0\analyzers\dotnet\cs\NServiceBus.Core.Analyzer.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

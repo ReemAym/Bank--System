@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NServiceBus.Transport.SqlServer</name>
+    </assembly>
+    <members>
+        <member name="F:NServiceBus.Transport.SqlServer.SettingsKeys.DisableNativePubSub">
+            <summary>
+            For testing the migration process only
+            </summary>
+        </member>
+        <member name="F:NServiceBus.Transport.SqlServer.SettingsKeys.DisableDelayedDelivery">
+            <summary>
+            For endpoints that only consume messages e.g. ServiceControl error
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Transport.SqlServer.DelayedDeliverySettings">
+            <summary>
+            Configures native delayed delivery.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.DelayedDeliverySettings.TableSuffix(System.String)">
+            <summary>
+            Sets the suffix for the table storing delayed messages.
+            </summary>
+            <param name="suffix"></param>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.DelayedDeliverySettings.BatchSize(System.Int32)">
+            <summary>
+            Sets the size of the batch when moving matured timeouts to the input queue.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.DelayedDeliverySettings.EnableTimeoutManagerCompatibility">
+            <summary>
+            Enables the timeout manager for the endpoint.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.DelayedDeliverySettings.ProcessingInterval(System.TimeSpan)">
+            <summary>
+            Configures how often delayed messages are processed.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.DelayedMessageTable.MoveDueMessages(System.Int32,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Threading.CancellationToken)">
+            <returns>The time of the next timeout due</returns>
+        </member>
+        <member name="T:NServiceBus.Transport.SqlServer.SubscriptionSettings">
+            <summary>
+            Configures the native pub/sub behavior
+            </summary>
+        </member>
+        <member name="F:NServiceBus.Transport.SqlServer.SubscriptionSettings.TimeToCacheSubscriptions">
+            <summary>
+            Default to 5 seconds caching. If a system is under load that prevent doing an extra roundtrip for each Publish operation. If
+            a system is not under load, doing an extra roundtrip every 5 seconds is not a problem and 5 seconds is small enough value that
+            people accepts as we always say that subscription operation is not instantaneous.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.SubscriptionSettings.SubscriptionTableName(System.String,System.String,System.String)">
+            <summary>
+            Overrides the default name for the subscription table. All endpoints in a given system need to agree on that name in order for them to be able
+            to subscribe to and publish events.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <param name="schemaName">Schema in which the table is defined if different from default schema configured for the transport.</param>
+            <param name="catalogName">Catalog in which the table is defined if different from default catalog configured for the transport.</param>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.SubscriptionSettings.CacheSubscriptionInformationFor(System.TimeSpan)">
+            <summary>
+            Cache subscriptions for a given <see cref="T:System.TimeSpan"/>.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Transport.SqlServer.SubscriptionSettings.DisableSubscriptionCache">
+            <summary>
+            Do not cache subscriptions.
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Transport.SqlServer.SqlServerTransportInfrastructure">
+             <summary>
+             ConfigureReceiveInfrastructure is called first, before features are started
+            
+             ConfigureSendInfrastructure is called last, when starting
+             </summary>
+        </member>
+        <member name="T:NServiceBus.Transport.SqlServer.SubscriptionTableInstaller">
+            <summary>
+            Subscription table cannot be created via ICreateQueues because it needs to be created also for send-only endpoints. Installers are registered
+            in the container via a convention so the only way to pass objects to them is via settings or via container. The transport infrastructure
+            cannot access the container so we're doing it via settings (HACK).
+            </summary>
+        </member>
+        <member name="T:NServiceBus.PublishOptionsExtensions">
+            <summary>
+            Adds transport specific settings to PublishOptions
+            </summary>
+        </member>
+        <member name="M:NServiceBus.PublishOptionsExtensions.UseCustomSqlTransaction(NServiceBus.PublishOptions,System.Data.SqlClient.SqlTransaction)">
+            <summary>
+            Enables the use of custom SqlTransaction instances for publish operations. The same transaction can be used in more than one publish operation.
+            </summary>
+            <param name="options">The <see cref="T:NServiceBus.PublishOptions" /> to extend.</param>
+            <param name="transaction">SqlTransaction instance that will be used by any operations performed by the transport.</param>
+        </member>
+        <member name="M:NServiceBus.PublishOptionsExtensions.UseCustomSqlConnection(NServiceBus.PublishOptions,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            Enables the use of custom SqlConnection for publish operations.
+            </summary>
+            <param name="options">The <see cref="T:NServiceBus.PublishOptions" /> to extend.</param>
+            <param name="connection">SqlConnection instance that will be used by any operations performed by the transport.</param>
+        </member>
+        <member name="T:NServiceBus.MessageDrivenPubSubCompatibilityModeConfiguration">
+            <summary>
+            Configuration extensions for Message-Driven Pub-Sub compatibility mode
+            </summary>
+        </member>
+        <member name="M:NServiceBus.MessageDrivenPubSubCompatibilityModeConfiguration.EnableMessageDrivenPubSubCompatibilityMode(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport})">
+            <summary>
+            Enables compatibility with endpoints running on message-driven pub-sub
+            </summary>
+            <param name="transportExtensions">The transport to enable pub-sub compatibility on</param>
+        </member>
+        <member name="T:NServiceBus.SendOptionsExtensions">
+            <summary>
+            Adds transport specific settings to SendOptions
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SendOptionsExtensions.UseCustomSqlTransaction(NServiceBus.SendOptions,System.Data.SqlClient.SqlTransaction)">
+            <summary>
+            Enables the use of custom SqlTransaction instances for send operations. The same transaction can be used in more than one send operation.
+            </summary>
+            <param name="options">The <see cref="T:NServiceBus.SendOptions" /> to extend.</param>
+            <param name="transaction">SqlTransaction instance that will be used by any operations performed by the transport.</param>
+        </member>
+        <member name="M:NServiceBus.SendOptionsExtensions.UseCustomSqlConnection(NServiceBus.SendOptions,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            Enables the use of custom SqlConnection for send operations.
+            </summary>
+            <param name="options">The <see cref="T:NServiceBus.SendOptions" /> to extend.</param>
+            <param name="connection">SqlConnection instance that will be used by any operations performed by the transport.</param>
+        </member>
+        <member name="T:NServiceBus.SqlServerTransport">
+            <summary>
+            SqlServer Transport
+            </summary>
+        </member>
+        <member name="P:NServiceBus.SqlServerTransport.ExampleConnectionStringForErrorMessage">
+            <summary>
+            <see cref="P:NServiceBus.Transport.TransportDefinition.ExampleConnectionStringForErrorMessage" />
+            </summary>
+        </member>
+        <member name="P:NServiceBus.SqlServerTransport.RequiresConnectionString">
+            <summary>
+            <see cref="P:NServiceBus.Transport.TransportDefinition.RequiresConnectionString" />
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransport.Initialize(NServiceBus.Settings.SettingsHolder,System.String)">
+            <summary>
+            <see cref="M:NServiceBus.Transport.TransportDefinition.Initialize(NServiceBus.Settings.SettingsHolder,System.String)" />
+            </summary>
+        </member>
+        <member name="T:NServiceBus.SqlServerTransportSettingsExtensions">
+            <summary>
+            Adds extra configuration for the Sql Server transport.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.DefaultSchema(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String)">
+            <summary>
+            Sets a default schema for both input and output queues
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.DefaultCatalog(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String)">
+            <summary>
+            Sets a default catalog for both input and output queues
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.UseSchemaForEndpoint(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String,System.String)">
+            <summary>
+            Specifies custom schema for given endpoint.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="endpointName">Endpoint name.</param>
+            <param name="schema">Custom schema value.</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.UseSchemaForQueue(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String,System.String)">
+            <summary>
+            Overrides schema value for given queue. This setting will take precedence over any other source of schema information.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="queueName">Queue name.</param>
+            <param name="schema">Custom schema value.</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.UseCatalogForEndpoint(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String,System.String)">
+            <summary>
+            Specifies custom schema for given endpoint.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="endpointName">Endpoint name.</param>
+            <param name="catalog">Custom catalog value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.UseCatalogForQueue(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.String,System.String)">
+            <summary>
+            Specifies custom schema for given queue.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="queueName">Queue name.</param>
+            <param name="catalog">Custom catalog value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.TimeToWaitBeforeTriggeringCircuitBreaker(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.TimeSpan)">
+            <summary>
+            Overrides the default time to wait before triggering a circuit breaker that initiates the endpoint shutdown procedure
+            in case there are numerous errors
+            while trying to receive messages.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="waitTime">Time to wait before triggering the circuit breaker.</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.UseCustomSqlConnectionFactory(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.Func{System.Threading.Tasks.Task{System.Data.SqlClient.SqlConnection}})">
+            <summary>
+            Specifies connection factory to be used by sql transport.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="sqlConnectionFactory">Factory that returns connection ready for usage.</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.TransactionScopeOptions(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.Nullable{System.TimeSpan},System.Nullable{System.Transactions.IsolationLevel})">
+            <summary>
+            Allows the <see cref="T:System.Transactions.IsolationLevel"/> and transaction timeout to be changed for the <see cref="T:System.Transactions.TransactionScope"/> used to receive messages.
+            </summary>
+            <remarks>
+            If not specified the default transaction timeout of the machine will be used and the isolation level will be set to
+            <see cref="F:System.Transactions.IsolationLevel.ReadCommitted"/>.
+            </remarks>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.WithPeekDelay(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.Nullable{System.TimeSpan})">
+            <summary>
+            Allows changing the queue peek delay.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="delay">The delay value</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.QueuePeekerOptions(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.Nullable{System.TimeSpan},System.Nullable{System.Int32})">
+            <summary>
+            Allows changing the queue peek delay, and the peek batch size.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="delay">The delay value</param>
+            <param name="peekBatchSize">The peek batch size</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.NativeDelayedDelivery(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport})">
+            <summary>
+            Configures native delayed delivery.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.SubscriptionSettings(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport})">
+            <summary>
+            Configures publish/subscribe behavior.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.PurgeExpiredMessagesOnStartup(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport},System.Nullable{System.Int32})">
+            <summary>
+            Instructs the transport to purge all expired messages from the input queue before starting the processing.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+            <param name="purgeBatchSize">Maximum number of messages in each delete batch.</param>
+        </member>
+        <member name="M:NServiceBus.SqlServerTransportSettingsExtensions.CreateMessageBodyComputedColumn(NServiceBus.TransportExtensions{NServiceBus.SqlServerTransport})">
+            <summary>
+            Instructs the transport to create a computed column for inspecting message body contents.
+            </summary>
+            <param name="transportExtensions">The <see cref="T:NServiceBus.TransportExtensions`1" /> to extend.</param>
+        </member>
+        <member name="T:JetBrains.Annotations.NotNullAttribute">
+            <summary>
+            Indicates that the value of the marked element could never be <c>null</c>
+            </summary>
+            <example><code>
+            [NotNull] public object Foo() {
+              return null; // Warning: Possible 'null' assignment
+            }
+            </code></example>
+        </member>
+        <member name="T:JetBrains.Annotations.ContractAnnotationAttribute">
+            <summary>
+            Describes dependency between method input and output
+            </summary>
+            <syntax>
+            <p>Function Definition Table syntax:</p>
+            <list>
+            <item>FDT      ::= FDTRow [;FDTRow]*</item>
+            <item>FDTRow   ::= Input =&gt; Output | Output &lt;= Input</item>
+            <item>Input    ::= ParameterName: Value [, Input]*</item>
+            <item>Output   ::= [ParameterName: Value]* {halt|stop|void|nothing|Value}</item>
+            <item>Value    ::= true | false | null | notnull | canbenull</item>
+            </list>
+            If method has single input parameter, it's name could be omitted.<br/>
+            Using <c>halt</c> (or <c>void</c>/<c>nothing</c>, which is the same)
+            for method output means that the methos doesn't return normally.<br/>
+            <c>canbenull</c> annotation is only applicable for output parameters.<br/>
+            You can use multiple <c>[ContractAnnotation]</c> for each FDT row,
+            or use single attribute with rows separated by semicolon.<br/>
+            </syntax>
+            <examples><list>
+            <item><code>
+            [ContractAnnotation("=> halt")]
+            public void TerminationMethod()
+            </code></item>
+            <item><code>
+            [ContractAnnotation("halt &lt;= condition: false")]
+            public void Assert(bool condition, string text) // regular assertion method
+            </code></item>
+            <item><code>
+            [ContractAnnotation("s:null => true")]
+            public bool IsNullOrEmpty(string s) // string.IsNullOrEmpty()
+            </code></item>
+            <item><code>
+            // A method that returns null if the parameter is null,
+            // and not null if the parameter is not null
+            [ContractAnnotation("null => null; notnull => notnull")]
+            public object Transform(object data) 
+            </code></item>
+            <item><code>
+            [ContractAnnotation("s:null=>false; =>true,result:notnull; =>false, result:null")]
+            public bool TryParse(string s, out Person result)
+            </code></item>
+            </list></examples>
+        </member>
+        <member name="T:JetBrains.Annotations.InvokerParameterNameAttribute">
+            <summary>
+            Indicates that the function argument should be string literal and match one
+            of the parameters of the caller function. For example, ReSharper annotates
+            the parameter of <see cref="T:System.ArgumentNullException"/>
+            </summary>
+            <example><code>
+            public void Foo(string param) {
+              if (param == null)
+                throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
+            }
+            </code></example>
+        </member>
+    </members>
+</doc>
